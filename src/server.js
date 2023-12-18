@@ -3,11 +3,16 @@ const express = require('express')
 const path = require('path');
 const { engine }  = require('express-handlebars')
 const methodOverride = require('method-override');
+const passport = require('passport');
+// descargar "npm i express-session"
+const session = require('express-session');
+
 
 
 // inicializar
 // instanciar express
 const app = express()
+require('./config/passport')
 
 // Configuraciones 
 // Variables de configuracion
@@ -30,19 +35,28 @@ app.set('view engine','.hbs')
 // El servidor va a trabajar con informacion en base a formularios
 app.use(express.urlencoded({extended:false}))
 app.use(methodOverride('_method'))
+// configurara la sesion del usuario
+app.use(session({ 
+    secret: 'secret',
+    resave:true,
+    saveUninitialized:true
+}));
+// inicializar passportjs y session
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 // // Variables globales
+// crear una variable global
+app.use((req,res,next)=>{
+    res.locals.user = req.user?.name || null
+    next()
+})
+// // Rutas 
 
-// Rutas 
-// app.get('/',(req,res)=>{
-//     res.send("Server on")
-// })
-// app.get('/',(req,res)=>{
-//     res.render('index')
-// })
 app.use(require('./routers/index.routes'))
 app.use(require('./routers/portafolio.routes'))
+app.use(require('./routers/user.routes'))
 
 // Archivos estáticos
 // Definir archivos estaticos y publicos
