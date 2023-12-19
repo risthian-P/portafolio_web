@@ -6,6 +6,9 @@ const methodOverride = require('method-override');
 const passport = require('passport');
 // descargar "npm i express-session"
 const session = require('express-session');
+// descargar "npm i express-fileupload""
+const fileUpload = require('express-fileupload')
+
 
 
 
@@ -30,6 +33,10 @@ app.engine('.hbs',engine({
     extname:'.hbs'
 }))
 app.set('view engine','.hbs')
+app.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : './uploads'
+}));
 
 // Middlewares 
 // El servidor va a trabajar con informacion en base a formularios

@@ -1,9 +1,12 @@
 // importar la variabla app
 require('dotenv').config()
 
+// importar la variable app
 const app = require('./server.js')
+// importar la variable connection
 const connection = require('./database.js')
 
+// ejecutar el metodo connection
 connection()
 
 // ejecutar el servidor en el puerto 3000
