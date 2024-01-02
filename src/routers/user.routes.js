@@ -1,7 +1,7 @@
 // importar router de express
 const {Router} = require('express')
 // desestructurar
-const { renderRegisterForm, registerNewUser, renderLoginForm, loginUser, logoutUser } = require('../controllers/user.controller')
+const { renderRegisterForm, registerNewUser, renderLoginForm, loginUser, logoutUser,confirmEmail} = require('../controllers/user.controller')
 const { redirectIfAuthenticated } = require('../helpers/validate-auth')
 // instanciar la variable router
 const router = Router()
@@ -19,5 +19,7 @@ router.post('/user/login',loginUser)
 // ruta para cerrar sesion del usuario
 router.post('/user/logout',logoutUser)
 
+// ruta para confirmar la cuenta del usuario
+router.get('/user/confirmar/:token',confirmEmail)
 
 module.exports =router
